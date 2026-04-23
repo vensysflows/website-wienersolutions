@@ -4,7 +4,10 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
-const FinalCTASection = () => {
+const FinalCTASection = ({ variantConfig = {} }) => {
+  const headline = variantConfig.finalHeadline ?? 'Deine Rechnungen schreiben sich nicht von selbst.';
+  const subline = variantConfig.finalSubline ?? 'Lass uns in 30 Minuten herausfinden, was bei dir möglich ist.';
+  const ctaText = variantConfig.finalCTAText ?? 'Kostenlosen Termin buchen';
   return (
     <section id="final-cta" data-section-id="final-cta-section" className="section-spacing relative overflow-hidden bg-primary">
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-accent opacity-90"></div>
@@ -19,10 +22,10 @@ const FinalCTASection = () => {
           className="max-w-3xl mx-auto text-center"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Deine Rechnungen schreiben sich nicht von selbst.
+            {headline}
           </h2>
           <p className="text-xl text-white/90 mb-10 leading-relaxed">
-            Lass uns in 30 Minuten herausfinden, was bei dir möglich ist.
+            {subline}
           </p>
 
           <a 
@@ -35,7 +38,7 @@ const FinalCTASection = () => {
               size="lg"
               className="rounded-xl group bg-white text-primary hover:bg-white/90 shadow-2xl text-lg px-10 py-7 mb-6"
             >
-              Kostenlosen Termin buchen
+              {ctaText}
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </a>

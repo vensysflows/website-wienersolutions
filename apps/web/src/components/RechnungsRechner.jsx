@@ -6,7 +6,7 @@ import { Slider } from '@/components/ui/slider';
 import { ArrowRight, ArrowLeft, CheckCircle2, ChevronDown } from 'lucide-react';
 import { trackRechnerStarted, trackRechnerCompleted, trackRechnerCTAClick, trackRechnerScrollDown } from '@/lib/facebookPixelEvents.js';
 
-const RechnungsRechner = () => {
+const RechnungsRechner = ({ variantConfig = {} }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const [invoices, setInvoices] = useState(20);
@@ -271,13 +271,13 @@ const RechnungsRechner = () => {
           >
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full mb-6">
               <CheckCircle2 className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Ø Kunde spart 8 Stunden pro Woche</span>
+              <span className="text-sm font-medium text-primary">{variantConfig.rechnerBadgeText ?? 'Ø Kunde spart 8 Stunden pro Woche'}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-              Wie viel Zeit verschwendest du gerade für Rechnungen?
+              {variantConfig.rechnerHeadline ?? 'Wie viel Zeit verschwendest du gerade für Rechnungen?'}
             </h1>
             <p className="text-xl text-gray-600">
-              Berechne deine Zeitersparnis in 60 Sekunden.
+              {variantConfig.rechnerSubline ?? 'Berechne deine Zeitersparnis in 60 Sekunden.'}
             </p>
           </motion.div>
 
@@ -391,15 +391,15 @@ const RechnungsRechner = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
                   <div className="flex items-center gap-3 text-sm text-gray-700">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
-                    <span>Kostenloses Setup in 7 Tagen</span>
+                    <span>{variantConfig.rechnerTrustSignal1 ?? 'Kostenloses Setup in 7 Tagen'}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-700">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
-                    <span>Zeitersparnis-Garantie</span>
+                    <span>{variantConfig.rechnerTrustSignal2 ?? 'Zeitersparnis-Garantie'}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-700">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
-                    <span>DSGVO-konform</span>
+                    <span>{variantConfig.rechnerTrustSignal3 ?? 'DSGVO-konform'}</span>
                   </div>
                 </div>
 
@@ -416,7 +416,7 @@ const RechnungsRechner = () => {
                       size="lg"
                       className="w-full rounded-xl group text-lg py-6 bg-primary text-white hover:bg-primary/90"
                     >
-                      Jetzt kostenlos automatisieren lassen
+                      {variantConfig.rechnerResultCTAText ?? 'Jetzt kostenlos automatisieren lassen'}
                       <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </a>

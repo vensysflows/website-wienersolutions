@@ -4,25 +4,28 @@ import { motion } from 'framer-motion';
 import { Clock, XCircle, FolderOpen } from 'lucide-react';
 import useSectionTracking from '@/hooks/useSectionTracking.js';
 
-const problems = [
+const iconMap = { Clock, XCircle, FolderOpen };
+
+const defaultProblems = [
   {
-    icon: Clock,
+    icon: 'Clock',
     title: 'Einen Arbeitstag pro Woche für Buchhaltung.',
     description: 'Erstellen, versenden, nachverfolgen. Alles manuelle Arbeit für die Mitarbeiter gebraucht werden.'
   },
   {
-    icon: XCircle,
+    icon: 'XCircle',
     title: 'Mahnungen werden vergessen.',
     description: 'Wer verfolgt, welche Rechnung seit 30 Tagen offen ist? Meistens niemand.'
   },
   {
-    icon: FolderOpen,
+    icon: 'FolderOpen',
     title: 'Der Steuerberater wartet wieder auf Belege.',
     description: 'Monatliche Belegvorbereitung ist unsichtbare Arbeit — die immer Freitagabend passiert.'
   }
 ];
 
-const ProblemSection2 = () => {
+const ProblemSection2 = ({ variantConfig = {} }) => {
+  const problems = variantConfig.problemCards ?? defaultProblems;
   const sectionRef = useSectionTracking('Problems_Rechnungen');
 
   return (
@@ -32,7 +35,7 @@ const ProblemSection2 = () => {
       <div className="container mx-auto container-padding relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {problems.map((problem, index) => {
-            const Icon = problem.icon;
+            const Icon = iconMap[problem.icon] ?? Clock;
             return (
               <motion.div
                 key={index}
