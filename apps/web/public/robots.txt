@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wienersolutions.com/sitemap.xml

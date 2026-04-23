@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Navy Premium Theme as default */
+    --background: 222 47% 7%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    
+    --accent: 221 83% 53%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 217 91% 60%;
+    
+    --radius: 0.75rem;
+    
+    /* Custom properties for solutions section */
+    --solution-manual: 24 98% 50%; /* Orange/Red */
+    --solution-automated: 142 71% 45%; /* Green */
+  }
+
+  /* Light mode variables for /rechnungen page */
+  .light-mode {
+    /* Core UI tokens */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    --accent: 221 83% 53%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
+
+    /* Light mode specific color variables */
+    --text-primary: 222 47% 11%;
+    --text-secondary: 215 25% 27%;
+    --text-muted: 215 16% 47%;
+    
+    --bg-light: 0 0% 100%;
+    --bg-subtle: 210 40% 98%;
+    --bg-section: 210 40% 96%;
+    --bg-header-gray: 210 20% 96%;
+    
+    --card-bg: 0 0% 100%;
+    --input-bg: 0 0% 100%;
+    --input-border: 214 32% 82%;
+    
+    --btn-primary-text: 0 0% 100%;
+    --btn-secondary-text: 222 47% 11%;
+    --btn-secondary-bg: 210 40% 96%;
+    
+    --icon-primary: 222 47% 11%;
+    --icon-secondary: 215 16% 47%;
+
+    /* Gradient background colors */
+    --gradient-start: 0 0% 100%;
+    --gradient-mid: 210 40% 99%;
+    --gradient-end: 215 30% 97%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+    text-wrap: balance;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl leading-tight;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl leading-snug;
+  }
+
+  p {
+    @apply leading-relaxed;
+    max-width: 65ch;
+  }
+
+  /* Light mode base styles */
+  .light-mode body {
+    color: hsl(var(--text-secondary));
+  }
+
+  .light-mode h1,
+  .light-mode h2,
+  .light-mode h3,
+  .light-mode h4,
+  .light-mode h5,
+  .light-mode h6 {
+    color: hsl(var(--text-primary));
+  }
+
+  .light-mode p {
+    color: hsl(var(--text-secondary));
+  }
+
+  .light-mode a {
+    color: hsl(var(--primary));
+  }
+
+  .light-mode a:hover {
+    color: hsl(var(--accent));
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+  }
+  
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-sm border border-white/5 shadow-lg hover:shadow-primary/10 hover:border-primary/30 transition-all duration-300;
+  }
+
+  .section-spacing {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Solutions specific utilities */
+  .solution-toggle-active {
+    @apply shadow-[0_0_15px_rgba(var(--ring),0.3)];
+  }
+
+  /* Light mode specific utilities */
+  .light-mode-container {
+    position: relative;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, hsl(var(--gradient-start)) 0%, hsl(var(--gradient-mid)) 50%, hsl(var(--gradient-end)) 100%);
+  }
+
+  .light-mode-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .light-mode-container > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .light-mode .glass-panel {
+    @apply bg-white/90 backdrop-blur-md border border-gray-200/60 shadow-[0_8px_32px_0_rgba(0,0,0,0.08)];
+  }
+  
+  .light-mode .glass-card {
+    @apply bg-white/95 backdrop-blur-sm border border-gray-200/50 shadow-md hover:shadow-primary/15 hover:border-primary/40 transition-all duration-300;
+  }
+
+  /* Light mode text utilities */
+  .light-mode .text-light-primary {
+    color: hsl(var(--text-primary));
+  }
+
+  .light-mode .text-light-secondary {
+    color: hsl(var(--text-secondary));
+  }
+
+  .light-mode .text-light-muted {
+    color: hsl(var(--text-muted));
+  }
+
+  /* Light mode background utilities */
+  .light-mode .bg-light {
+    background-color: hsl(var(--bg-light));
+  }
+
+  .light-mode .bg-subtle {
+    background-color: hsl(var(--bg-subtle));
+  }
+
+  .light-mode .bg-section {
+    background-color: hsl(var(--bg-section));
+  }
+
+  .light-mode .bg-header-gray {
+    background-color: hsl(var(--bg-header-gray));
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
+/* Light mode scrollbar */
+.light-mode ::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+.light-mode ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}

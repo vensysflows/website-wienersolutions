@@ -1,0 +1,217 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<!-- Meta Pixel Code -->
+		<script>
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '962123709506558');
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=962123709506558&ev=PageView&noscript=1"
+		/></noscript>
+		<!-- End Meta Pixel Code -->
+		
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="generator" content="Hostinger Horizons" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Hostinger Horizons</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="module" src="/src/main.jsx"></script>
+		
+		<!-- Custom Event Tracking -->
+		<script>
+		(function() {
+			const WEBHOOK_URL = 'https://n8n.wienersolutions.com/webhook/website-tracking';
+
+			// Helper to get base payload with URL params
+			function getBasePayload(eventName) {
+				const payload = {
+					event: eventName,
+					timestamp: new Date().toISOString(),
+					page: window.location.pathname,
+					referrer: document.referrer
+				};
+				// Merge URL params flat into payload
+				const params = new URLSearchParams(window.location.search);
+				for (const [key, value] of params.entries()) {
+					payload[key] = value;
+				}
+				return payload;
+			}
+
+			// Helper to send data silently
+			function sendEvent(payload) {
+				fetch(WEBHOOK_URL, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload),
+					keepalive: true
+				}).catch(function() { /* silent error handling */ });
+			}
+
+			// Debounce helper for input events
+			function debounce(func, wait) {
+				let timeout;
+				return function(...args) {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => func.apply(this, args), wait);
+				};
+			}
+
+			// EVENT 1: Page View
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', function() {
+					sendEvent(getBasePayload('page_view'));
+				});
+			} else {
+				sendEvent(getBasePayload('page_view'));
+			}
+
+			// EVENT 2: Calculator Result
+			// NOTE: Adjust '.result-hours-week' and '.result-cost-year' selectors to match the actual DOM structure of your calculator component.
+			let calcTracked = false;
+			const observer = new MutationObserver(function(mutations, obs) {
+				if (calcTracked) return;
+				
+				const hoursEl = document.querySelector('.result-hours-week');
+				const costEl = document.querySelector('.result-cost-year');
+				
+				// Wait until both elements are visible/exist in DOM
+				if (hoursEl && costEl && (hoursEl.offsetWidth > 0 || hoursEl.offsetHeight > 0)) {
+					calcTracked = true;
+					const payload = getBasePayload('calculator_result');
+					payload.hours_per_week = hoursEl.textContent.trim();
+					payload.cost_per_year = costEl.textContent.trim();
+					sendEvent(payload);
+					obs.disconnect(); // Stop observing once found
+				}
+			});
+			// Observe body for changes to catch dynamic calculator results
+			observer.observe(document.body, { childList: true, subtree: true });
+
+			// EVENT 3: CTA Click
+			document.body.addEventListener('click', function(e) {
+				// Find closest anchor or button
+				const target = e.target.closest('a, button');
+				if (!target) return;
+
+				const textContent = (target.textContent || '').trim();
+				const textLower = textContent.toLowerCase();
+				const href = (target.getAttribute('href') || '').toLowerCase();
+
+				const isBooking = textLower.includes('termin') || 
+													href.includes('cal.') || 
+													href.includes('calendly') || 
+													href.includes('tidycal');
+
+				if (isBooking) {
+					const payload = getBasePayload('cta_click');
+					payload.button_text = textContent;
+					payload.destination = target.getAttribute('href') || '';
+					sendEvent(payload);
+				}
+			});
+
+			// EVENT 4: Calculator Step Tracking
+			// NOTE: Adjust '.calculator-container', '.calculator-step-number', and '.calculator-step-name' selectors to match actual DOM structure.
+			const handleCalcInput = debounce(function(e) {
+				const target = e.target;
+				if (!target.closest('.calculator-container')) return;
+
+				const stepNumEl = document.querySelector('.calculator-step-number');
+				const stepNameEl = document.querySelector('.calculator-step-name');
+
+				const payload = getBasePayload('calculator_step');
+				payload.action = 'input_change';
+				payload.step_number = stepNumEl ? stepNumEl.textContent.trim() : '';
+				payload.step_name = stepNameEl ? stepNameEl.textContent.trim() : '';
+				payload.step_value = target.value || '';
+				sendEvent(payload);
+			}, 500);
+
+			document.body.addEventListener('input', handleCalcInput);
+			document.body.addEventListener('change', handleCalcInput);
+
+			document.body.addEventListener('click', function(e) {
+				const target = e.target.closest('button, a');
+				if (!target) return;
+
+				const isCalcContainer = target.closest('.calculator-container');
+				if (!isCalcContainer) return;
+
+				const isNext = target.classList.contains('calc-next-btn') || target.textContent.toLowerCase().includes('weiter');
+				const isPrev = target.classList.contains('calc-prev-btn') || target.textContent.toLowerCase().includes('zurück');
+				const isComplete = target.textContent.toLowerCase().includes('ergebnis anzeigen');
+
+				if (isNext || isPrev || isComplete) {
+					const stepNumEl = document.querySelector('.calculator-step-number');
+					const stepNameEl = document.querySelector('.calculator-step-name');
+
+					const payload = getBasePayload('calculator_step');
+					if (isComplete) {
+						payload.action = 'step_completed';
+					} else {
+						payload.action = isNext ? 'next_click' : 'previous_click';
+					}
+					payload.step_number = stepNumEl ? stepNumEl.textContent.trim() : '';
+					payload.step_name = stepNameEl ? stepNameEl.textContent.trim() : '';
+					sendEvent(payload);
+				}
+			});
+
+			// EVENT 5: Section View Tracking
+			const viewedSections = new Set();
+			const sectionObserver = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						const sectionId = entry.target.getAttribute('data-section-id');
+						if (sectionId && !viewedSections.has(sectionId)) {
+							viewedSections.add(sectionId);
+							const payload = getBasePayload('section_view');
+							payload.section_id = sectionId;
+							sendEvent(payload);
+							sectionObserver.unobserve(entry.target);
+						}
+					}
+				});
+			}, { threshold: 0.5 });
+
+			// Observe existing and dynamically added sections
+			const observeSections = function() {
+				document.querySelectorAll('[data-section-id]').forEach(function(el) {
+					if (!el._isObserved) {
+						sectionObserver.observe(el);
+						el._isObserved = true;
+					}
+				});
+			};
+
+			// Initial observation
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', observeSections);
+			} else {
+				observeSections();
+			}
+
+			// Watch for dynamically added sections (React rendering)
+			const domObserver = new MutationObserver(function() {
+				observeSections();
+			});
+			domObserver.observe(document.body, { childList: true, subtree: true });
+
+		})();
+		</script>
+	</body>
+</html>
