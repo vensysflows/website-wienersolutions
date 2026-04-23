@@ -19,6 +19,12 @@
  * A Claude Code agent runs every 4-5 days (see OPTIMIZATION_PROMPT.md in repo root).
  * It reads conversion data per variant, replaces the worst performer, and
  * documents results in Notion: Wiener Solutions > Website > A/B Test Log.
+ *
+ * PROPS CONSUMED BY COMPONENTS (must be wired up in each component):
+ * - RechnungsRechner:  rechnerBadgeText, rechnerHeadline, rechnerSubline,
+ *                      rechnerResultCTAText, rechnerTrustSignal1/2/3
+ * - ProblemSection2:   problemCards (array of { icon, title, description })
+ * - FinalCTASection:   finalHeadline, finalSubline, finalCTAText
  */
 
 export const ACTIVE_VARIANTS = ['v1', 'v2', 'v3'];
@@ -27,30 +33,117 @@ export const CONTROL_VARIANT = 'v1';
 
 export const VARIANTS = {
   v1: {
-    label: 'Control',
-    description: 'Original version — baseline for all comparisons',
-    /**
-     * Add variant-specific props here when building variant v1.
-     * Example:
-     * heroHeadline: 'Wie viel Zeit verschwendest du gerade für Rechnungen?',
-     * ctaText: 'Jetzt kostenlos automatisieren lassen →',
-     */
+    label: 'Control — Baseline',
+    description: 'Original version — identical to the hardcoded defaults. All other variants are measured against this.',
+
+    // RechnungsRechner
+    rechnerBadgeText: 'Ø Kunde spart 8 Stunden pro Woche',
+    rechnerHeadline: 'Wie viel Zeit verschwendest du gerade für Rechnungen?',
+    rechnerSubline: 'Berechne deine Zeitersparnis in 60 Sekunden.',
+    rechnerResultCTAText: 'Jetzt kostenlos automatisieren lassen',
+    rechnerTrustSignal1: 'Kostenloses Setup in 7 Tagen',
+    rechnerTrustSignal2: 'Zeitersparnis-Garantie',
+    rechnerTrustSignal3: 'DSGVO-konform',
+
+    // ProblemSection2
+    problemCards: [
+      {
+        icon: 'Clock',
+        title: 'Einen Arbeitstag pro Woche für Buchhaltung.',
+        description: 'Erstellen, versenden, nachverfolgen. Alles manuelle Arbeit für die Mitarbeiter gebraucht werden.',
+      },
+      {
+        icon: 'XCircle',
+        title: 'Mahnungen werden vergessen.',
+        description: 'Wer verfolgt, welche Rechnung seit 30 Tagen offen ist? Meistens niemand.',
+      },
+      {
+        icon: 'FolderOpen',
+        title: 'Der Steuerberater wartet wieder auf Belege.',
+        description: 'Monatliche Belegvorbereitung ist unsichtbare Arbeit — die immer Freitagabend passiert.',
+      },
+    ],
+
+    // FinalCTASection
+    finalHeadline: 'Deine Rechnungen schreiben sich nicht von selbst.',
+    finalSubline: 'Lass uns in 30 Minuten herausfinden, was bei dir möglich ist.',
+    finalCTAText: 'Kostenlosen Termin buchen',
   },
 
   v2: {
-    label: 'Variant B',
-    description: 'Placeholder — to be defined by optimization agent',
-    /**
-     * Add variant-specific props here when building variant v2.
-     */
+    label: 'Handwerker-Spezifität',
+    description: 'Message-Match zum Handwerker-Hook der neuesten Meta Ads ("Als Handwerker hörst du um 17 Uhr auf. Deine Rechnungen sollten das auch."). Testet ob Zielgruppen-Spezifität die Calculator Completion und CTA Rate erhöht.',
+
+    // RechnungsRechner
+    rechnerBadgeText: 'Handwerker sparen Ø 6 Stunden pro Woche',
+    rechnerHeadline: 'Als Handwerker: Wie viele Stunden verlierst du wöchentlich für Rechnungen?',
+    rechnerSubline: 'In 60 Sekunden berechnen — danach weißt du genau, was dich das kostet.',
+    rechnerResultCTAText: 'Jetzt Rechnungsprozess automatisieren lassen',
+    rechnerTrustSignal1: 'Setup komplett kostenlos',
+    rechnerTrustSignal2: 'Du zahlst nur, wenn es läuft',
+    rechnerTrustSignal3: 'DSGVO-konform',
+
+    // ProblemSection2
+    problemCards: [
+      {
+        icon: 'Clock',
+        title: 'Nach einem langen Arbeitstag fängst du erst mit Rechnungen an.',
+        description: 'Du hörst auf zu arbeiten — aber die Buchhaltung fängt dann erst an. Das kostet dich Abende, Wochenenden, Energie.',
+      },
+      {
+        icon: 'XCircle',
+        title: 'Mahnungen passieren zu spät oder gar nicht.',
+        description: 'Wer erinnert sich an jede offene Rechnung? Geld bleibt liegen, weil niemand konsequent nachfasst.',
+      },
+      {
+        icon: 'FolderOpen',
+        title: 'Belege sammeln, sortieren, einreichen — jeden Monat.',
+        description: 'Belegvorbereitung für den Steuerberater ist unsichtbare Arbeit, die immer Freitagabend passiert.',
+      },
+    ],
+
+    // FinalCTASection
+    finalHeadline: 'Deine Rechnungen halten dich vom Handwerk ab. Nicht mehr.',
+    finalSubline: 'Lass uns in 30 Minuten deinen kompletten Rechnungsprozess automatisieren.',
+    finalCTAText: 'Kostenlosen Termin buchen',
   },
 
   v3: {
-    label: 'Variant C',
-    description: 'Placeholder — to be defined by optimization agent',
-    /**
-     * Add variant-specific props here when building variant v3.
-     */
+    label: 'Autopilot-Vision',
+    description: 'Positiver Outcome-Frame statt Schmerz-Frame. "Was wäre wenn"-Hypothese direkt aus dem 87%-Ad-Body abgeleitet. Testet ob Vision-Framing ("Einmal einrichten. Nie mehr anfassen.") besser konvertiert als Schmerz-Framing.',
+
+    // RechnungsRechner
+    rechnerBadgeText: 'Ø Kunde automatisiert 156 Rechnungsstunden pro Jahr',
+    rechnerHeadline: 'Was wäre, wenn deine Rechnungen ab morgen auf Autopilot laufen?',
+    rechnerSubline: 'Berechne zuerst, wie viele Stunden du heute noch manuell investierst.',
+    rechnerResultCTAText: 'Automatisierung kostenlos starten →',
+    rechnerTrustSignal1: 'Einmal einrichten. Nie mehr anfassen.',
+    rechnerTrustSignal2: 'Setup komplett kostenlos',
+    rechnerTrustSignal3: 'DSGVO-konform',
+
+    // ProblemSection2
+    problemCards: [
+      {
+        icon: 'Clock',
+        title: 'Jetzt: 3+ Stunden Rechnungskram pro Woche.',
+        description: 'Nach der Automatisierung: Das System übernimmt Erstellung, Versand und Nachverfolgung. Du siehst es nur noch in der Auswertung.',
+      },
+      {
+        icon: 'XCircle',
+        title: 'Jetzt: Mahnungen, die du vergisst zu schicken.',
+        description: 'Nach der Automatisierung: Jede offene Rechnung wird automatisch nachgefasst. Kein Geld bleibt mehr liegen.',
+      },
+      {
+        icon: 'FolderOpen',
+        title: 'Jetzt: Freitagabend mit Belegen und Steuerberater.',
+        description: 'Nach der Automatisierung: Alle Belege werden sofort kategorisiert und hochgeladen. Vollautomatisch, jeden Monat.',
+      },
+    ],
+
+    // FinalCTASection
+    finalHeadline: 'Einmal einrichten. Nie mehr anfassen.',
+    finalSubline: 'In 30 Minuten zeige ich dir, wie dein Rechnungsprozess dauerhaft auf Autopilot geht.',
+    finalCTAText: 'Automatisierung kostenlos starten →',
   },
 };
 
