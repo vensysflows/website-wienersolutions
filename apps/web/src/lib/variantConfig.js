@@ -109,41 +109,46 @@ export const VARIANTS = {
   },
 
   v3: {
-    label: 'Autopilot-Vision',
-    description: 'Positiver Outcome-Frame statt Schmerz-Frame. "Was wäre wenn"-Hypothese direkt aus dem 87%-Ad-Body abgeleitet. Testet ob Vision-Framing ("Einmal einrichten. Nie mehr anfassen.") besser konvertiert als Schmerz-Framing.',
+    label: 'Direkter Einstieg — kein Rechner',
+    description: 'Kein Calculator. Direkte Hook-Section mit sofortigem CTA. Social Proof kommt vor Problem Section für frühen Vertrauensaufbau. ValueStack entfällt für kürzeren Funnel. Testet ob ein direkterer Pfad ohne Calculator-Hürde mehr Buchungen erzeugt.',
 
-    // RechnungsRechner
-    rechnerBadgeText: 'Ø Kunde automatisiert 156 Rechnungsstunden pro Jahr',
-    rechnerHeadline: 'Was wäre, wenn deine Rechnungen ab morgen auf Autopilot laufen?',
-    rechnerSubline: 'Berechne zuerst, wie viele Stunden du heute noch manuell investierst.',
-    rechnerResultCTAText: 'Automatisierung kostenlos starten →',
-    rechnerTrustSignal1: 'Einmal einrichten. Nie mehr anfassen.',
-    rechnerTrustSignal2: 'Setup komplett kostenlos',
+    // Layout-Flags
+    showCalculator: false,
+    showValueStack: false,
+    socialProofFirst: true,
+
+    // Hero-Section (ersetzt den Rechner)
+    rechnerBadgeText: 'Spart 12 Std/Woche — Setup in 5 Tagen',
+    rechnerHeadline: 'Du hast heute gearbeitet. Warum tippst du jetzt noch Rechnungen?',
+    rechnerSubline: 'Ich automatisiere deinen kompletten Rechnungsprozess — Erstellung, Versand, Mahnung, Zahlungsabgleich. Einmal einrichten, danach läuft es.',
+    rechnerResultCTAText: 'Kostenloses Erstgespräch buchen →',
+    rechnerTrustSignal1: 'Setup komplett kostenlos',
+    rechnerTrustSignal2: 'Du zahlst nur, wenn es läuft',
     rechnerTrustSignal3: 'DSGVO-konform',
 
     // ProblemSection2
     problemCards: [
       {
         icon: 'Clock',
-        title: 'Jetzt: 3+ Stunden Rechnungskram pro Woche.',
-        description: 'Nach der Automatisierung: Das System übernimmt Erstellung, Versand und Nachverfolgung. Du siehst es nur noch in der Auswertung.',
+        title: 'Jeden Abend Rechnungen statt Feierabend.',
+        description: 'Erstellen, versenden, nachverfolgen — das passiert immer dann, wenn eigentlich Schluss ist. Abende, Wochenenden, Urlaub.',
       },
       {
         icon: 'XCircle',
-        title: 'Jetzt: Mahnungen, die du vergisst zu schicken.',
-        description: 'Nach der Automatisierung: Jede offene Rechnung wird automatisch nachgefasst. Kein Geld bleibt mehr liegen.',
+        title: 'Mahnungen, die niemand schickt.',
+        description: 'Offene Rechnungen fallen durchs Raster. Kein System, das automatisch nachfasst — also bleibt Geld liegen.',
       },
       {
         icon: 'FolderOpen',
-        title: 'Jetzt: Freitagabend mit Belegen und Steuerberater.',
-        description: 'Nach der Automatisierung: Alle Belege werden sofort kategorisiert und hochgeladen. Vollautomatisch, jeden Monat.',
+        title: 'Belegchaos kurz vor dem Steuerberater-Termin.',
+        description: 'Jeden Monat die gleiche Panik: Belege suchen, sortieren, einreichen. Unsichtbare Arbeit die sich aufstaut.',
       },
     ],
 
     // FinalCTASection
     finalHeadline: 'Einmal einrichten. Nie mehr anfassen.',
     finalSubline: 'In 30 Minuten zeige ich dir, wie dein Rechnungsprozess dauerhaft auf Autopilot geht.',
-    finalCTAText: 'Automatisierung kostenlos starten →',
+    finalCTAText: 'Kostenloses Erstgespräch buchen →',
   },
 };
 
