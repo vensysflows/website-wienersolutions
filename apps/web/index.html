@@ -35,13 +35,20 @@
 		(function() {
 			const WEBHOOK_URL = 'https://n8n.wienersolutions.com/webhook/website-tracking';
 
+			// Read a cookie value by name
+			function getCookie(name) {
+				const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+				return match ? match[2] : null;
+			}
+
 			// Helper to get base payload with URL params
 			function getBasePayload(eventName) {
 				const payload = {
 					event: eventName,
 					timestamp: new Date().toISOString(),
 					page: window.location.pathname,
-					referrer: document.referrer
+					referrer: document.referrer,
+					variant: getCookie('ws_variant') || ''
 				};
 				// Merge URL params flat into payload
 				const params = new URLSearchParams(window.location.search);
