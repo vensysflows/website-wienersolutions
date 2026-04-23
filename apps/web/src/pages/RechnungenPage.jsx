@@ -11,9 +11,13 @@ import AboutCompactSection from '@/components/AboutCompactSection.jsx';
 import FinalCTASection from '@/components/FinalCTASection.jsx';
 import Footer from '@/components/Footer.jsx';
 import { usePixelTracking } from '@/hooks/usePixelTracking.js';
+import { useVariant } from '@/hooks/useVariant.js';
+import { VARIANTS } from '@/lib/variantConfig.js';
 
 const RechnungenPage = () => {
   usePixelTracking();
+  const { variant } = useVariant();
+  const variantConfig = VARIANTS[variant] ?? VARIANTS['v1'];
 
   return (
     <div className="light-mode min-h-screen selection:bg-primary/30 selection:text-primary-foreground">
@@ -25,18 +29,18 @@ const RechnungenPage = () => {
       {/* Gray background wrapper for header + calculator */}
       <div className="bg-header-gray relative">
         <div className="absolute inset-0 bg-gradient-to-b from-gray-100/50 to-transparent pointer-events-none"></div>
-        <RechnungenHeader />
-        <RechnungsRechner />
+        <RechnungenHeader variant={variant} variantConfig={variantConfig} />
+        <RechnungsRechner variant={variant} variantConfig={variantConfig} />
       </div>
 
       {/* Gradient background for remaining sections */}
       <div className="light-mode-container">
-        <ProblemSection2 />
-        <ValueStackSection />
-        <ProcessSection />
-        <SocialProofSection />
-        <AboutCompactSection />
-        <FinalCTASection />
+        <ProblemSection2 variant={variant} variantConfig={variantConfig} />
+        <ValueStackSection variant={variant} variantConfig={variantConfig} />
+        <ProcessSection variant={variant} variantConfig={variantConfig} />
+        <SocialProofSection variant={variant} variantConfig={variantConfig} />
+        <AboutCompactSection variant={variant} variantConfig={variantConfig} />
+        <FinalCTASection variant={variant} variantConfig={variantConfig} />
         <Footer />
       </div>
     </div>
