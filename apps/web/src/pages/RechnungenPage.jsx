@@ -83,6 +83,21 @@ const DirectHeroSection = ({ variantConfig }) => {
   );
 };
 
+const componentMap = {
+  hero:        { default: RechnungsRechner, DirectHeroSection: DirectHeroSection },
+  problem:     { default: ProblemSection2 },
+  valueStack:  { default: ValueStackSection },
+  process:     { default: ProcessSection },
+  socialProof: { default: SocialProofSection },
+  about:       { default: AboutCompactSection },
+  finalCTA:    { default: FinalCTASection },
+};
+
+const resolveComponent = (slot, config) => {
+  const overrideName = config?.components?.[slot];
+  return (overrideName && componentMap[slot]?.[overrideName]) || componentMap[slot].default;
+};
+
 const RechnungenPage = () => {
   usePixelTracking();
   const { variant } = useVariant();
@@ -91,6 +106,14 @@ const RechnungenPage = () => {
   const showCalculator = variantConfig.showCalculator !== false;
   const showValueStack = variantConfig.showValueStack !== false;
   const socialProofFirst = variantConfig.socialProofFirst === true;
+
+  const HeroComp        = resolveComponent('hero',        variantConfig);
+  const ProblemComp     = resolveComponent('problem',     variantConfig);
+  const ValueStackComp  = resolveComponent('valueStack',  variantConfig);
+  const ProcessComp     = resolveComponent('process',     variantConfig);
+  const SocialProofComp = resolveComponent('socialProof', variantConfig);
+  const AboutComp       = resolveComponent('about',       variantConfig);
+  const FinalCTAComp    = resolveComponent('finalCTA',    variantConfig);
 
   return (
     <div className="light-mode min-h-screen selection:bg-primary/30 selection:text-primary-foreground">
@@ -103,7 +126,7 @@ const RechnungenPage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-100/50 to-transparent pointer-events-none" />
         <RechnungenHeader variant={variant} variantConfig={variantConfig} />
         {showCalculator ? (
-          <RechnungsRechner variant={variant} variantConfig={variantConfig} />
+          <HeroComp variant={variant} variantConfig={variantConfig} />
         ) : (
           <DirectHeroSection variantConfig={variantConfig} />
         )}
@@ -111,18 +134,18 @@ const RechnungenPage = () => {
 
       <div className="light-mode-container">
         {socialProofFirst && (
-          <SocialProofSection variant={variant} variantConfig={variantConfig} />
+          <SocialProofComp variant={variant} variantConfig={variantConfig} />
         )}
-        <ProblemSection2 variant={variant} variantConfig={variantConfig} />
+        <ProblemComp variant={variant} variantConfig={variantConfig} />
         {showValueStack && (
-          <ValueStackSection variant={variant} variantConfig={variantConfig} />
+          <ValueStackComp variant={variant} variantConfig={variantConfig} />
         )}
-        <ProcessSection variant={variant} variantConfig={variantConfig} />
+        <ProcessComp variant={variant} variantConfig={variantConfig} />
         {!socialProofFirst && (
-          <SocialProofSection variant={variant} variantConfig={variantConfig} />
+          <SocialProofComp variant={variant} variantConfig={variantConfig} />
         )}
-        <AboutCompactSection variant={variant} variantConfig={variantConfig} />
-        <FinalCTASection variant={variant} variantConfig={variantConfig} />
+        <AboutComp variant={variant} variantConfig={variantConfig} />
+        <FinalCTAComp variant={variant} variantConfig={variantConfig} />
         <Footer />
       </div>
     </div>

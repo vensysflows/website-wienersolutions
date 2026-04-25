@@ -68,6 +68,9 @@ export const VARIANTS = {
     finalHeadline: 'Deine Rechnungen schreiben sich nicht von selbst.',
     finalSubline: 'Lass uns in 30 Minuten herausfinden, was bei dir möglich ist.',
     finalCTAText: 'Kostenlosen Termin buchen',
+
+    // Component-Overrides — leer = Default-Komponenten
+    components: {},
   },
 
   v2: {
@@ -106,6 +109,9 @@ export const VARIANTS = {
     finalHeadline: 'Deine Rechnungen halten dich vom Handwerk ab. Nicht mehr.',
     finalSubline: 'Lass uns in 30 Minuten deinen kompletten Rechnungsprozess automatisieren.',
     finalCTAText: 'Kostenlosen Termin buchen',
+
+    // Component-Overrides — leer = Default-Komponenten
+    components: {},
   },
 
   v3: {
@@ -149,6 +155,9 @@ export const VARIANTS = {
     finalHeadline: 'Einmal einrichten. Nie mehr anfassen.',
     finalSubline: 'In 30 Minuten zeige ich dir, wie dein Rechnungsprozess dauerhaft auf Autopilot geht.',
     finalCTAText: 'Kostenloses Erstgespräch buchen →',
+
+    // Component-Overrides — leer = Default-Komponenten
+    components: {},
   },
 };
 
