@@ -1,0 +1,5 @@
+## Pages
+- [AGB - Wiener Solutions](/agb): Allgemeine Geschäftsbedingungen der Wiener Solutions.
+- [Datenschutz - Wiener Solutions](/datenschutz): Datenschutzerklärung der Wiener Solutions.
+- [Impressum - Wiener Solutions](/impressum): Impressum der Wiener Solutions.
+- [Wiener Solutions - Automatisierungen, die du kontrollierst](/home): Mein Name ist Lasse Wiener. Seid über zwei Jahren baue ich bereits Automatisierungen für verschiedenste Unternehmen. Ich liebe die Herausforderung, vor einem neuen Problem, neuen complexen Prozessen zu stehen und einen Plan zu entwickeln wie ich diese, auch mit der Anwendung von KI, automatisieren kann und dir Zeit sparen kann.
